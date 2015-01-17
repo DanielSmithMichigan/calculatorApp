@@ -16,8 +16,15 @@ var general = {
 		}
 		return output;
 	}
-	,is_numerical: function(item) {
-		return(this.is_numeric(item) || item === '.');
+	,last_character_is_decimal: function(n) {
+		return(("" + n).slice(-1) === '.');
+	}
+	,string_contains_decimal_point: function(n) {
+		/* Will only work with strings, because, for example, 5.000 will be converted to 5 immediately once it's passed as a parameter  */
+		return(n.split('.').length > 1);
+	}
+	,is_decimal_point: function(n) {
+		return(n === '.');
 	}
 	,is_numeric: function(n) {
 		return(!isNaN(parseFloat(n)) && isFinite(n));
