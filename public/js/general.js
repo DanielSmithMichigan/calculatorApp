@@ -1,8 +1,9 @@
 var general = {
 	template_location: 'templates'
 	,element_template_location: 'element_templates'
-	,operators: ['+','-','/','*','(',')']
+	,operators: ['+','-','/','*']
 	,numbers: [0,1,2,3,4,5,6,7,8,9,'.']
+	,commands: ['=','C']
 	,get_template_url: function(tagname) {
 		var new_tag_name = tagname.toLowerCase() + '.html';
 		return([this.template_location, this.element_template_location, new_tag_name].join('/'));
@@ -15,6 +16,9 @@ var general = {
 			output = false;
 		}
 		return output;
+	}
+	,equals_zero: function(n) {
+		return(n == 0);
 	}
 	,last_character_is_decimal: function(n) {
 		return(("" + n).slice(-1) === '.');

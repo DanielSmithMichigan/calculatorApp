@@ -5,65 +5,62 @@ screenWriter.prototype.emptyStack = function() {
 	this.symbolStack = [];
 }
 screenWriter.prototype.addToStack = function(item) {
-	var pushToStack;
+	item = "" + item; // symbolStack can only contain strings
 	var topOfStack = this.symbolStack.pop();
-	var repush = false;
-	if (typeof topOfStack === 'undefined') {
-		if (general.is_operator(item)) {
-			// can't push operator without number to the left in infix.
-		} else if (general.is_decimal_point(item)) {
-			pushToStack = "" + "0" + item;
-		} else {
-			pushToStack = item;
-		}
-	} else {
-		// possibilities: 
-		// top of stack can be a number or operator. (decimal point by itself will have 0 prepended, thus becoming a number)
-		// new on stack can be number, operator or decimal point.
-		
-		// top of stack is number
-		if (general.is_numeric(topOfStack)) {
-			if (general.is_numeric(item)) {
-				// new stack item is number, concat to number on top of stack
-				pushToStack = "" + topOfStack + item;
-			} else if (general.is_decimal_point(item)) {
-				// new stack item is decimal point
-				if (!general.string_contains_decimal_point(topOfStack)) {
-					// make sure there isn't already a decimal point in the number we are adding the decimal point to
-					pushToStack = "" + topOfStack + item;
-				} else {
-					pushToStack = topOfStack;
-				}
-			} else {
-				// new stack item is operator
-				repush = true;
-				if (general.last_character_is_decimal(topOfStack)) {
-					topOfStack = topOfStack.substring(0, topOfStack.length - 1);
-				}
-				pushToStack = item;
-			}
-		} else if (general.is_operator(topOfStack)) {
-			// top of stack is operator
-			if (general.is_operator(item)) {
-				// new on stack is operator. Just replace top of stack.
-				pushToStack = item;
-			} else if (general.is_decimal_point(item)) {
-				repush = true;
-				pushToStack = "" + "0" + item;
-			} else if (general.is_numeric(item)) {
-				repush = true;
-				pushToStack = item;
-			}
-		}
+	if (general.is_numeric(item)) {
+		this.addDigit(topOfStack, item);
+	} else if (general.is_decimal_point(item)) {
+		this.addDecimalPoint(topOfStack, item);
+	} else if (general.is_operator(item)) {
+		this.addOperator(topOfStack, item);
 	}
-	if (repush === true) {
+}
+screenWriter.prototype.addOperator = function(topOfStack, item) {
+	if (general.is_operator(topOfStack)) {
+		this.symbolStack.push(item);
+	} else if (general.is_numeric(topOfStack)) {
+		if (general.last_character_is_decimal(topOfStack)) {
+			topOfStack = topOfStack.substring(0, topOfStack.length - 1);
+		}
 		this.symbolStack.push(topOfStack);
+		this.symbolStack.push(item);
 	}
-	this.symbolStack.push(pushToStack);
+}
+screenWriter.prototype.addDecimalPoint = function(topOfStack, item) {
+	if (general.is_operator(topOfStack)) {
+		this.symbolStack.push(topOfStack);
+		item = "" + "0" + item;
+		this.symbolStack.push(item);
+	} else if (general.is_numeric(topOfStack)) {
+		if (!general.string_contains_decimal_point(topOfStack)) {
+			item = "" + topOfStack + item;
+			this.symbolStack.push(item);
+		} else {
+			this.symbolStack.push(topOfStack);
+		}
+	} else if (typeof topOfStack === 'undefined') {
+		item = "" + "0" + item;
+		this.symbolStack.push(item);
+	}
+}
+screenWriter.prototype.addDigit = function(topOfStack, item) {
+	if (general.is_operator(topOfStack)) {
+		this.symbolStack.push(topOfStack);
+		this.symbolStack.push(item);
+	} else if (general.is_numeric(topOfStack)) {
+		if (general.equals_zero(topOfStack) && !general.string_contains_decimal_point(topOfStack)) {
+			item = "" + item;
+		} else {
+			item = "" + topOfStack + item;
+		}
+		this.symbolStack.push(item);
+	} else if (typeof topOfStack === 'undefined') {
+		this.symbolStack.push(item);
+	}
 }
 screenWriter.prototype.getDisplay = function() {
 	var output = '';
-	var spacer = '  ';
+	var spacer = ' ';
 	var previous_type = false;
 	var current_type = false;
 	for(var i = 0; i < this.symbolStack.length; i++) {

@@ -1,3 +1,6 @@
+QUnit.test("expressionEvaluatorTest", function(assert) {
+	
+});
 QUnit.test("screenWriterTest", function( assert ) {
 	var screen = new screenWriter();
 	assert.deepEqual(screen.symbolStack, [], "test_001");
@@ -54,6 +57,15 @@ QUnit.test("screenWriterTest", function( assert ) {
 	screen.addToStack('.');
 	stackCompare = ['1', '-', '0.1', '/', '0.'];
 	assert.deepEqual(screen.symbolStack, stackCompare, "test_022");
+	screen.emptyStack();
+	screen.addToStack('0');
+	assert.deepEqual(screen.symbolStack, ['0'], "test_023");
+	screen.addToStack('1');
+	assert.deepEqual(screen.symbolStack, ['1'], "test_024");
+	screen.addToStack('0');
+	assert.deepEqual(screen.symbolStack, ['10'], "test_025");
+	screen.addToStack('1');
+	assert.deepEqual(screen.symbolStack, ['101'], "test_026");
 	
 });
 QUnit.test("generalClass", function(assert) {

@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="js/general.js"></script>
 		<script type="text/javascript" src="js/screen_writer.js"></script>
 		<script type="text/javascript" src="js/page_js.js"></script>
+		<title><%- title %></title>
 	</head>
 	<body ng-app="calculator">
 		<div ng-controller="calculatorController">
@@ -19,6 +20,7 @@
 					</div>
 					<div class="col-xs-4 no_padding">
 						<div ng-repeat="operator in operators" class="number_button inline_block_display" ng-click="addToScreen(operator)">{{operator}}</div>
+						<div ng-repeat="command in commands" class="number_button inline_block_display" ng-click="performCommand(command)">{{command}}</div>
 					</div>
 				</div>
 			</calculator>
