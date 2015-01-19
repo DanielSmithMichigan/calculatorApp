@@ -56,7 +56,6 @@ expressionEvaluator.prototype.evaluateExpression = function(original_expression,
 			
 			// iterate over each symbol in expression
 			for (var i = 0; i < postfix_expression.length; i++) {
-			
 				// instantiate variables
 				curr_symbol = postfix_expression[i];
 				curr_type = this.op_types[curr_symbol];
@@ -159,7 +158,7 @@ expressionEvaluator.prototype.convertToPostFix = function(expression, callback) 
 					if (operators.length === 0) {
 						operators.push(curr_symbol);
 					} else {
-					
+						
 						// instantiate variables
 						curr_operator_priority = this.op_priority[curr_symbol];
 						comparison_operator_priority = this.op_priority[operators.slice(-1)[0]];

@@ -61,4 +61,79 @@ dbHandler.prototype.findByFilter = function(filters, callback) {
 	});
 };
 
+dbHandler.prototype.installDb = function() {
+	this.db.createCollection('calculator-db', function() {});
+	var doc = {
+	  "type" : "config",
+	  "name" : "commands",
+	  "value" : ["=", "C"],
+	  "refreshOnCalc" : true
+	};
+	this.addDocument(doc);
+	var doc = 
+	{
+	  "type" : "config",
+	  "name" : "numbers",
+	  "value" : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "."],
+	  "expression" : true,
+	  "refreshOnCalc" : true
+	};
+	this.addDocument(doc);
+	var doc = 
+	{
+	  "type" : "config",
+	  "name" : "operators",
+	  "value" : ["+", "-", "/", "*"],
+	  "expression" : true,
+	  "refreshOnCalc" : true
+	};
+	this.addDocument(doc);
+	var doc = 
+	{
+	  "type" : "config",
+	  "name" : "operator_priority",
+	  "value" : {
+		"-" : 0,
+		"+" : 0,
+		"/" : 1,
+		"*" : 1,
+		"(neg)" : 2
+	  },
+	  "refreshOnCalc" : true
+	}
+;
+	this.addDocument(doc);
+	var doc = 
+	{
+	  "type" : "config",
+	  "name" : "title",
+	  "value" : "Dans Calculator App"
+	};
+	this.addDocument(doc);
+	var doc = 
+	{
+	  "type" : "config",
+	  "name" : "max_numbers",
+	  "value" : 2
+	};
+	this.addDocument(doc);
+	var doc = 
+	{
+	  "type" : "config",
+	  "name" : "max_operators",
+	  "value" : 1
+	};
+	this.addDocument(doc);
+};
+
+dbHandler.prototype.addDocument = function(document) {
+	this.getCollection(function(err, collection) {
+		if (err) {
+			callback(err);
+		} else {
+			collection.insert(document, function(){});
+		}
+	});
+};
+
 module.exports = dbHandler;
