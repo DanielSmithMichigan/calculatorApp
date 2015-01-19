@@ -1,7 +1,6 @@
-QUnit.test("expressionEvaluatorTest", function(assert) {
-	
-});
 QUnit.test("screenWriterTest", function( assert ) {
+	general.max_operators = 20;
+	general.max_numbers = 20;
 	var screen = new screenWriter();
 	assert.deepEqual(screen.symbolStack, [], "test_001");
 	screen.addToStack('5');
@@ -66,6 +65,34 @@ QUnit.test("screenWriterTest", function( assert ) {
 	assert.deepEqual(screen.symbolStack, ['10'], "test_025");
 	screen.addToStack('1');
 	assert.deepEqual(screen.symbolStack, ['101'], "test_026");
+	general.max_operators = 1;
+	general.max_numbers = 2;
+	screen.emptyStack();
+	screen.addToStack('1');
+	screen.addToStack('+');
+	var stackCompare = ['1', '+'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_027");
+	screen.addToStack('+');
+	stackCompare = ['1', '+'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_028");
+	screen.addToStack('-');
+	stackCompare = ['1', '-'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_029");
+	screen.addToStack('.');
+	stackCompare = ['1', '-', '0.'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_030");
+	screen.addToStack('1');
+	stackCompare = ['1', '-', '0.1'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_031");
+	screen.addToStack('.');
+	stackCompare = ['1', '-', '0.1'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_032");
+	screen.addToStack('/');
+	stackCompare = ['1', '-', '0.1'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_033");
+	screen.addToStack('.');
+	stackCompare = ['1', '-', '0.1'];
+	assert.deepEqual(screen.symbolStack, stackCompare, "test_034");
 	
 });
 QUnit.test("generalClass", function(assert) {

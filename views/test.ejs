@@ -15,5 +15,10 @@
 	<script type="text/javascript" src="js/screen_writer.js"></script>
 	<script src="js/qunit.js"></script>
 	<script src="js/unit_tests.js"></script>
+	
+	<script type="text/javascript">
+		var config = <%- JSON.stringify(configuration); %>;
+		general.import_config(config);
+	</script>
 </body>
 </html>

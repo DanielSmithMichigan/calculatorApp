@@ -1,13 +1,25 @@
+/*
+ * @Author DSmith
+ * Configuration is responsible for retrieving the configuration from the database, sorting it into public (viewable on client side) and private configuration
+ * and making that data useable
+ */
+ 
 var configuration = function(dbHandler) {
 	this.dbHandler = dbHandler;
 	this.config_public = {};
 	this.config_private = {};
 }
 
+/*
+ * @Author DSmith
+ * Retrieve configuration from database. If a filter is passed in, only get the values requested through the filter
+ */
+ 
 configuration.prototype.retrieveConfiguration = function(filters, callback) {
 	this.dbHandler.findByFilter(filters, function(err, configurations) {
-		if (err) callback(err)
-		else {
+		if (err) {
+			callback(err)
+		} else {
 			for(var i = 0; i < configurations.length; i++) {
 				var curr_config = configurations[i];
 				if (curr_config.private === true) {
@@ -19,17 +31,6 @@ configuration.prototype.retrieveConfiguration = function(filters, callback) {
 			callback(null);
 		}
 	}.bind(this));
-}
-
-configuration.prototype.updateConfiguration = function(filters, callback) {
-	this.retrieveConfiguration.apply(this, [filters, function(err, config) {
-		if (err) callback(err)
-		else {
-			for (var i in config) {
-				this[i] = config[i];
-			}
-		}
-	}]);
 }
 
 module.exports = configuration;

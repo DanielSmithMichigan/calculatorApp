@@ -8,7 +8,7 @@
 		<script type="text/javascript" src="js/general.js"></script>
 		<script type="text/javascript" src="js/screen_writer.js"></script>
 		<script type="text/javascript" src="js/page_js.js"></script>
-		<title><%- title %></title>
+		<title><%- configuration.title %></title>
 	</head>
 	<body ng-app="calculator">
 		<div ng-controller="calculatorController">
@@ -25,5 +25,9 @@
 				</div>
 			</calculator>
 		</div>
+		<script type="text/javascript">
+			var config = <%- JSON.stringify(configuration); %>;
+			general.import_config(config);
+		</script>
 	</body>
 </html>

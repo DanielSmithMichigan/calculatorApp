@@ -1,9 +1,12 @@
+/* This is filled with helper functions */
 var general = {
 	template_location: 'templates'
 	,element_template_location: 'element_templates'
-	,operators: ['+','-','/','*']
-	,numbers: [0,1,2,3,4,5,6,7,8,9,'.']
-	,commands: ['=','C']
+	,import_config: function (configuration) {
+		for(var i in configuration) {
+			this[i] = configuration[i];
+		}
+	}
 	,get_template_url: function(tagname) {
 		var new_tag_name = tagname.toLowerCase() + '.html';
 		return([this.template_location, this.element_template_location, new_tag_name].join('/'));

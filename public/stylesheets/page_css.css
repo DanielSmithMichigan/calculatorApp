@@ -64,6 +64,8 @@
 }
 
 .input_screen_green {
+	white-space: nowrap;
+	overflow: hidden;
 	padding: 5px;
 	display: block;
 	width: 100%;

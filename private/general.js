@@ -1,3 +1,5 @@
+/* My idea for general is that it just holds a bunch of utility functions */
+
 var general = function () {
 }
 
