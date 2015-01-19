@@ -10,13 +10,12 @@
 	padding: 0px !important;
 }
 
+
+
 .number_button {	
-	width: 30px;
-	font-size: 14px;
 	padding: 0;
 	margin: 1px;
 	font-family: verdana;
-	font-size: 14px;
 	color: white;
 	text-align: center;
 	text-decoration: none;
@@ -40,7 +39,6 @@
 	margin: 50px auto;
 	padding: 15px;
 	width: 100%;
-	max-width: 300px;
 	background: #3d4543;
 	border: 1px solid #222;
 	border-radius: 4px;
@@ -83,4 +81,19 @@
 	background-image: linear-gradient(to bottom, #bccd95, #e0f5b1);
 	-webkit-box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12);
 	box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.number_button{
+	width: 120px;
+	font-size: 40px;
+}
+
+.calculator {
+	width: 100%;
+	max-width: 1000px;
+}
+
+.input_screen_green {
+	height: 60px;
+	font-size: 24pt;
 }
